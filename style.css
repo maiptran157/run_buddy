@@ -1,6 +1,6 @@
 * {
     box-sizing: border-box;
-    font-family: Sans-serif;
+    font-family: 'Open Sans', sans-serif;
 }
 
 body {
@@ -8,10 +8,15 @@ body {
    padding: 0;
    height: 100vh;
    width: 100vw;
-   background: url("images/background_pic.jpg");
+   background: url(./images/runningtrail.jpg);
    background-repeat: repeat-y; 
    background-position: center;
    background-size: cover;
+   background-attachment: fixed
+}
+
+.trailName{
+    border-bottom: 1px black solid;
 }
 
 .container {
@@ -20,53 +25,110 @@ body {
    width: 100%;
 }
 
-.search_container {
-    position: relative;
-    top: 30%;
+.form-inline {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    height: 4rem;
     width: 100%;
+    text-align: center;
+    font-size: 2.5rem;
+    color: rgba(255, 255, 255, 0.8);
 }
 
 #search_input {
-    height: 15%;   /*no px to be responsive */
-    font-size: 5rem;  /*should use rem to be responsive*/
+    display: inline-block;
+    font-family: 'Poppins', sans-serif;
+    width: 40%;
+    height: 115%;
     text-align: center;
+    border: 0;
+    font-size: 2.0rem;
+    color: black;
+    background-color: rgba(255, 255, 255, 0.7);
+    box-shadow: inset 0 2px 2px black;
+    outline: none;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
 }
 
-#runningMan {
-    height: 55px; /*depending on above, change to %? */
+#runButton {
+    font-family: 'Raleway', sans-serif;
+    outline: none;
+    border: none;
+    background-image: linear-gradient(to right,#9ACC61, #2aa8c3);
+    box-shadow: 0 5px 2px #30A3C5;
+    color: white;
+    font-size: 1.7rem;
+    height: 100%;
+    border-radius: 30px;
+    cursor: pointer;
+    vertical-align: top;
+    display: inline-block;
 }
 
-.alert {
+::placeholder { 
+    color: black; /* Firefox */
+    opacity: 1;
+}
+
+ .input-group-btn {
+    display: inline-block;
+    vertical-align: top;
+ }
+
+.logo {
+    position: absolute;
+    top: 20%;
+    left: 52%;
+    transform: translate(-50%,-50%);
+    height: 4rem;
     width: 75%;
     text-align: center;
-    align-content: center;
-    border: 1px dotted orangered;
 }
 
-.glyphicon-search { /*we don't need this anymore right? */
-    height: 56px;
-    font-size: 50px;
+.responsive {
+    height: auto;
+}
+
+#info_msg {
+    font-size: 0.7em;
+    font-weight: bold;
+    font-style: italic;
+    color: #404040;
+    text-align: center;
+}
+
+.information {
+    margin-top: 1%;
+    padding: 1%;
+    width: 50%;
+    height: 12rem;
+    background-color: #fff9e6;
+    opacity: 0.7;
+    align-content: center;
+    border: 1px dotted black;
+    font-family: 'Poppins', sans-serif;
+    transform: translate(55%, 1%);
 }
 
 .weather_tab {
-    color: black; /*will be updated*/
     font-size: 4rem;
-}
-
-
-#error_msg {
-    color: orangered;
-    text-align: center;
-    font-size: 2rem;
+    color: black;
 }
 
 #map_area{
     height: 500px;
     left: 4vw;
+    border: 1px solid black;
+    border-radius: 10px;
+    margin-top: 3%;
     width: 90vw;
+    box-shadow: 5px 10px 18px black;
 }
 
-.meetup{
+.meetup_tab{
     background-color: white;
     color: black;
 }
@@ -77,54 +139,55 @@ a{
 
 .weather_list {
     list-style-type: none;
-    font-weight: bolder;
-    font-size: 2.5rem;
-    padding: 5% 0 0 10%;
+    padding: 5% 0 3% 20%;
 }
 
 .weather_list>p {
     font-size: 3.5rem;
+    border-bottom: 1px black solid;
 }
 
 .weather_icon {
-    width: 10%;
+    /* width: 15%; */
+    /* background-color: white; */
+    margin-right: 2%;
 }
 .events{
-    border: 1px solid darkgreen;
     background-color: whitesmoke;
     border-radius: 10px;
     width: 90vw;
     padding: 2%;
-    margin: 4% auto;
-    font-size: 1.4rem;
-    opacity: 0.9;
+    margin: 2% auto;
+    font-size: 2.4rem;
+    opacity: 0.95;
     box-shadow: 5px 10px 18px black;
 }
 
+.events>p {
+    font-size: 3.5rem;
+    border-bottom: 1px black solid;
+}
 
 /* Search List Result Box */
 .list_result {
     display: -webkit-box;
     width: 90vw;
-    border: 1px solid darkgreen;
     background-color: whitesmoke;
     border-radius: 10px;
     padding: 2%;
     margin: 4% auto;
-    font-size: 1.4rem;
+    font-size: 2.4rem;
     opacity: 0.9;
     box-shadow: 5px 10px 18px black;
 }
 
 .description {
-    border: 1px solid darkgreen;
     background-color: whitesmoke;
     border-radius: 10px;
-    width: 90%;
+    width: 90vw;
     padding: 2%;
     margin: 4% auto;
-    font-size: 1.4rem;
-    opacity: 0.9;
+    font-size: 2.4rem;
     box-shadow: 5px 10px 18px black;
 }
 
@@ -137,7 +200,7 @@ a{
     position: relative;
     left: 4vw;
     height: 20%;
-    width: 93%;
+    width: 90%;
     overflow: hidden;
     border: 1px solid #ccc;
     background-color: #fff;
@@ -179,27 +242,10 @@ a{
     font-size: 4rem;
 }
 
-
-.landing_page {
-    height: 100%;
-    left: 30%;
-    width: 60%;
-}
-
-.logo, .form-inline {
-    position: relative;
-    left: 30%;
-}
-
-.alert-warning {
-    width: 112%;
-}
-
 .tabLinks:hover {
     background-color: lightgray;
     font-weight: bold;
 }
-
 
 .meerkat{
     width: 20%;
@@ -212,15 +258,24 @@ a{
     justify-content: center;
 }
 
-#result{
+#result,.weather_list{
     background-color: whitesmoke;
     border-radius: 10px;
-    width: 89vw;
-    left: 4vw;
+    width: 90vw;
     padding: 2%;
+    margin: 4% auto;
     position: relative;
-    font-size: 1.4rem;
+    font-size: 2.4rem;
     opacity: 0.9;
     box-shadow: 5px 10px 18px black;
-    border: 1px solid darkgreen;
 }
+
+.list_result:hover {
+    display: -webkit-box;
+    opacity: 1;
+    box-shadow: 7px 12px 20px black;
+}
+/* 
+.groupName{
+    border-bottom: 1px black solid;
+} */

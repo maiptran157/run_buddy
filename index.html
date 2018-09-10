@@ -6,6 +6,9 @@
     <meta name="description" content="c718 hackathon 2, team 1">
     <meta name="author" content="Esther, Perry, Sarah, Torie, Mia">
     <title>7.18 Hackathon 2 (Team 1)</title>
+    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:800i" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Roboto:300" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
@@ -18,26 +21,27 @@
     <div class="meerkat hidden">
             <img id="meerkat" src="./images/meerkat.gif">
     </div>
-    <div class="container">
+    <div class="container-fluid">
 
         <div class="landing_page">
 
-            <div class="search_container">
+            <!-- <div class="search_container"> -->
 
                 <div class="logo">
-                    <img src="./images/runbuddylogogirl.png">
+                    <img class="responsive" src="./images/RunBuddyLogo.png">
                 </div>
                 <div class="form-inline">
-                    <input type="text" class="form-control" id="search_input" placeholder="Enter Zip Code">
+                    <input type="text" class="form-control" id="search_input" placeholder="Enter ZIP Codes or City">
                     <div class="input-group-btn form-group">
                         <button class="btn btn-default" id="runButton">
-                            <img id="runningMan" src="images/letsrun.png">
+                            <!-- <img id="runningMan" src="images/letsrun.png"> -->
+                            LET'S RUN
                         </button>
 
                     </div>
-                    <div class="alert alert-warning hidden" id="error_msg">
-                        <span class="glyphicon glyphicon-exclamation-sign"></span>
-                        Invalid zip code. Please check again.
+                    <div class="alert information hidden" id="info_msg">
+                        <span class="glyphicon glyphicon-info-sign"></span>
+                        Enter a location to look for a place to run<br>or<br>just click the green button to look in your current location 
                     </div>
                 </div>
             </div>
@@ -54,14 +58,9 @@
                             <div class="results description_tab tabLinks hidden" onclick="displayResult()">
                                 Trail List</div>
                             <div class="description_tab tabLinks" onclick="displayDescription()">Description</div>
-                            <div class="direction_tab tabLinks" onclick="displayDirection()">Direction
-                                
-                            </div>
-
-                            <div class="weather_tab tabLinks" onclick="displayWeather()">Weather
-                                <div class="weather_display"></div>
-                            </div>
-                            <div class="meetup tabLinks" onclick="displayMeetUp()">MeetUp</div>
+                            <div class="direction_tab tabLinks" onclick="displayDirection()">Direction</div>
+                            <div class="weather_tab tabLinks" onclick="displayWeather()">Weather</div>
+                            <div class="meetup_tab tabLinks" onclick="displayMeetUp()">MeetUp</div>
                         </div>
                         <div class="descriptionTab">
                         </div>
