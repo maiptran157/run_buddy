@@ -1,10 +1,19 @@
 function displayMapOnDom() {
     $(".landing_page").addClass("hidden");
+
     /* Map options */
-    const options = {
-        zoom: 11,
-        center: runningTrails[0],
+    if($(window).width()<=480){
+        var options = {
+            zoom: 9,
+            center: runningTrails[0],
+        }
+    } else {
+        var options = {
+            zoom: 10,
+            center: runningTrails[0],
+        }
     }
+
     /* New map */
     map = new google.maps.Map(document.getElementById("map_area"), options);
     /* Add marker */

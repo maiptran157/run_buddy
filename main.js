@@ -107,7 +107,7 @@ function geocodingResponse(response) {
     runningTrails.push(center);
     getDataFromTrailsList(lat, lng);
     getDataFromWeather(lat, lng);
-    getWeatherForecast(lat, lng);
+    // getWeatherForecast(lat, lng);
 }
 
 function responseFromTrailsList(response) {
