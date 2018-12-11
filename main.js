@@ -107,7 +107,7 @@ function geocodingResponse(response) {
     runningTrails.push(center);
     getDataFromTrailsList(lat, lng);
     getDataFromWeather(lat, lng);
-    getWeatherForecast(lat, lng);
+    // getWeatherForecast(lat, lng);
 }
 
 function responseFromTrailsList(response) {
@@ -168,6 +168,9 @@ function displayDescription() {
     $('.nav_tabs, .description').removeClass('hidden');
     $('.weather_tab, .meetup_tab, .direction_tab, .trails_tab').removeClass('currentTab');
     $('.description_tab').addClass('currentTab');
+    $(".container_tabs").animate({
+        scrollTop: 0
+    }, "slow");
 }
 
 function displayDirection() {
@@ -175,6 +178,9 @@ function displayDirection() {
     $('#direction_container').removeClass('hidden');
     $('.description_tab, .meetup_tab, .weather_tab, .trails_tab').removeClass('currentTab');
     $('.direction_tab').addClass('currentTab');
+    $(".container_tabs").animate({
+        scrollTop: 0
+    }, "slow");
 }
 
 function displayWeather() {
@@ -185,6 +191,9 @@ function displayWeather() {
     $('.weather_container').removeClass('hidden');
     $('.description_tab, .meetup_tab, .direction_tab, .trails_tab').removeClass('currentTab');
     $('.weather_tab').addClass('currentTab');
+    $(".container_tabs").animate({
+        scrollTop: 0
+    }, "slow");
 }
 
 function displayMeetUp() {
@@ -195,6 +204,9 @@ function displayMeetUp() {
     $('.description, .results_list, .weather_container, #direction_container').addClass('hidden');
     $('.description_tab, .weather_tab, .direction_tab, .trails_tab').removeClass('currentTab');
     $('.meetup_tab').addClass('currentTab');
+    $(".container_tabs").animate({
+        scrollTop: 0
+    }, "slow");
 }
 
 function notifyTrailClicked(event) {

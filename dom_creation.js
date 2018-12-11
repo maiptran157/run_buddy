@@ -1,10 +1,19 @@
 function displayMapOnDom() {
     $(".landing_page").addClass("hidden");
+
     /* Map options */
-    const options = {
-        zoom: 11,
-        center: runningTrails[0],
+    if($(window).width()<=480){
+        var options = {
+            zoom: 9,
+            center: runningTrails[0],
+        }
+    } else {
+        var options = {
+            zoom: 10,
+            center: runningTrails[0],
+        }
     }
+
     /* New map */
     map = new google.maps.Map(document.getElementById("map_area"), options);
     /* Add marker */
@@ -174,14 +183,31 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
                     newTr3.appendChild(td3);
                     result.appendChild(newTr3);
                 }
-            /* error function */
+            /* Direction error function */
             } else {
+                displayMapForNoAvailableDirection(pointB);
                 console.log('Directions request failed due to ' + status + ' for direction');
                 var result = document.getElementById('direction_container');
-                result.innerText = "Oops. We couldn't find a direction route to this trail from your location. Please try another trail.";
+                result.innerText = "Oops. There is no direct route to this trail from your location. Please try another trail.";
             }
         }
     );
+}
+
+function displayMapForNoAvailableDirection(pointB){
+    const options = {
+        zoom: 10,
+        center: pointB,
+    }
+    /* New map */
+    map = new google.maps.Map(document.getElementById("map_area"), options);
+    /* Add marker */
+    let marker = new google.maps.Marker({
+        position: pointB,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        icon: "images/run_buddy_marker2.png"
+    });
 }
 
 function displayWeatherSuccess(responseFromServer) {
