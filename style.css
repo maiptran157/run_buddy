@@ -40,6 +40,7 @@ body {
 
 #runButton {
     display: none;
+    cursor: pointer;
 }
 #search_input {
     width: 550px;
@@ -93,6 +94,7 @@ body {
     text-shadow: 1.5px 1.5px rgb(87, 100, 104);
     white-space: nowrap;
     height: 42px;
+    cursor: pointer;
 }
 .top_navigation{
     display: flex;
@@ -145,6 +147,7 @@ body {
 
 #glass_button{
     display: none;
+    cursor: pointer;
 }
 ::placeholder { 
     color: gray; /* Firefox */
@@ -153,6 +156,7 @@ body {
 
  .input-group-btn {
     display: inline-block;
+    cursor: pointer;
  }
 
 .logo {
@@ -608,6 +612,7 @@ Media Queries
     }
     .btn-blue{
         margin-top: 5%;
+        cursor: pointer;
     }
     .map_page_logo{
         height: 25px;
@@ -633,6 +638,7 @@ Media Queries
         width: 13%;
         height: 100%;
         right: 0;
+        cursor: pointer;
     }
     #search_field {
         text-align: left;
@@ -654,6 +660,7 @@ Media Queries
     }
     #runButton {
         display: none;
+        cursor: pointer;
     }
     #search_input{
         font-size: 0.85rem;
@@ -861,6 +868,7 @@ Media Queries
     }
     .btn-blue{
         margin-top: 4%;
+        cursor: pointer;
     }
     .logo{
         width: 400px;
@@ -870,9 +878,11 @@ Media Queries
         position: absolute;
         width: 45px;
         right: 0;
+        cursor: pointer;
     }
     #runButton {
         display: none;
+        cursor: pointer;
     }
     .search_container{
         font-size: 1.2rem;
@@ -926,6 +936,7 @@ Media Queries
 
      .input-group-btn {
         display: inline-block;
+        cursor: pointer;
      }
 
     .map_and_search_result_message {
@@ -1099,6 +1110,7 @@ Media Queries
 @media all and (min-width: 768px) and (max-width: 1200px) {
     .btn-blue{
         margin-top: 9%;
+        cursor: pointer;
     }
     .col-2 {
         margin: 0 10%;
