@@ -816,11 +816,23 @@ Media Queries
     
     .tabLinks {
         /* line-height: 35px; */
-        font-size: 0.75rem;
+        font-size: 0.60rem;
     }
     
     .tabLinks:hover {
         font-weight: bolder;
+    }
+
+    .description_tab{
+        width: 170px;
+    }
+
+    .trails_tab{
+        width: 125px;
+    }
+
+    .meetup_tab{
+        width: 130px;
     }
     
     .locationPicture {
