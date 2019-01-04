@@ -96,6 +96,7 @@ function renderTrailInfoOnDom(markerIsClicked = false) {
 }
 
 function displayTrailDescription(trail) {
+    history.pushState({trail: trail.name}, "title", trail.name);
     if (!$('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').addClass('zIndex')
     }
