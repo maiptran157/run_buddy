@@ -143,6 +143,7 @@ function displayError(error) {
 }
 
 function displayResult() {
+    history.back()
     if ($('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').removeClass('zIndex')
     }
