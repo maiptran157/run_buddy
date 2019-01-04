@@ -135,11 +135,31 @@ function responseFromTrailsList(response) {
             });
         }
     });
-    displayResult();
+    displayResultAfterSearch();
 }
 
 function displayError(error) {
     console.log(`Error: ${error}`);
+}
+
+function displayResultAfterSearch() {
+    if ($('.container_tabs').hasClass('zIndex')) {
+        $('.container_tabs').removeClass('zIndex')
+    }
+    if (!$('.results_list').hasClass('zIndex')) {
+        $('.results_list').addClass('zIndex')
+    }
+    $('.detail_container').addClass('hidden');
+    $('.results_list').removeClass('hidden');
+    $('.trails_tab').addClass('currentTab');
+    $('#map_area').text();
+    if($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')){
+        $('.weather_tab, .meetup_tab').removeClass('currentTab');
+        displayMapOnDom();
+        return;
+    }
+    $('.weather_tab, .meetup_tab').removeClass('currentTab');
+    displayMapOnDom();
 }
 
 function displayResult() {
