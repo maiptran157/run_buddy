@@ -69,6 +69,7 @@ function getLatLongFromGeocoding(inputAddress) {
 }
 
 function activatePlacesSearch() {
+    debugger;
     const input = document.getElementById('search_input');
     const input2 = document.getElementById('search_field');
     const autocomplete = new google.maps.places.Autocomplete(input);
@@ -76,6 +77,7 @@ function activatePlacesSearch() {
 }
 
 function getDataFromTrailsList(latitude, longitude) {
+    debugger;
     $('.landing_page').addClass('hidden');
     if (userInput) {
         $("#search_field").val(userInput);

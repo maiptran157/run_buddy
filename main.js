@@ -6,9 +6,18 @@ let inputFromUser = null;
 let userInput = null;
 let markersOnMap = [];
 let map = {};
+let latt = null;
+let longi = null;
 
 function initializeApp() {
     addClickHandlersToElements();
+    //  Check window.location for query string
+    //  If query string contains trail
+        //  call displayTrailDescription(trail)
+    let query = window.location.search
+    if(query.includes('lat')){
+        extractLatLongFromQuery(query)
+    }
 }
 
 function addClickHandlersToElements() {
@@ -111,6 +120,7 @@ function geocodingResponse(response) {
 }
 
 function responseFromTrailsList(response) {
+    debugger;
     if (response.trails.length === 0) {
         $(".results_list").empty();
         $(".map_page").removeClass("hidden");
@@ -119,8 +129,7 @@ function responseFromTrailsList(response) {
         $('.list_and_details').append(noResult);
         return;
     }
-    $(".detail_container").removeClass('hidden');
-    $('.nav_tabs').addClass('hidden');
+
     const { trails } = response;
     trails.map((trail) => {
         const { latitude, longitude } = trail;
@@ -135,7 +144,15 @@ function responseFromTrailsList(response) {
             });
         }
     });
+    let query = window.location.search
+    if(query.includes('lat')){
+        findTrailfromLatandLong(latt,longi)
+        return
+    }
+
     displayResultAfterSearch();
+    $(".detail_container").removeClass('hidden');
+    $('.nav_tabs').addClass('hidden');
 }
 
 function displayError(error) {
@@ -254,4 +271,21 @@ function goBackToLandingPage(){
     $(".map_page, .map_area").addClass("hidden");
     $(".landing_page").removeClass("hidden");
     $('.meetup_container').empty();
+}
+
+function extractLatLongFromQuery(query){
+    let latAndLong = query.split("?lat=")[1].split("?long=");
+    latAndLong = latAndLong.map(x=>parseFloat(x));
+    latt = latAndLong[0];
+    longi = latAndLong[1];
+    getDataFromTrailsList(longi,latt)
+}
+
+function findTrailfromLatandLong(long,lat){
+    debugger;
+    for (i =0; i <runningTrails.length; i++) {
+        if (runningTrails[i].latitude === lat && runningTrails[i].longitude === long ){
+            displayTrailDescription(runningTrails[i]);
+        }
+    }
 }
