@@ -99,7 +99,6 @@ function renderTrailInfoOnDom(markerIsClicked = false) {
 }
 
 function displayTrailDescription(trail) {
-
     history.pushState({ trail: trail.name }, "title", `?lat=${trail.longitude}?long=${trail.latitude}`);
     if (!$('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').addClass('zIndex')

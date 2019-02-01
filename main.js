@@ -195,7 +195,9 @@ function displayResultAfterSearch() {
 }
 
 function displayResult() {
-    history.back()
+    var pathName = document.location.pathname;;
+    window.history.pushState({}, document.title, pathName);
+
     if ($('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').removeClass('zIndex')
     }
@@ -237,9 +239,9 @@ function displayDirection() {
 }
 
 function displayWeather() {
-    // if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
-    //     displayMapOnDom()
-    // }
+    if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
+        displayMapOnDom()
+    }
     $('#direction_container, .results_list, .events, .description, .meetup_container').addClass('hidden');
     $('.weather_container').removeClass('hidden');
     $('.description_tab, .meetup_tab, .direction_tab, .trails_tab').removeClass('currentTab');
@@ -250,9 +252,9 @@ function displayWeather() {
 }
 
 function displayMeetUp() {
-    // if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
-    //     displayMapOnDom()
-    // }
+    if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
+        displayMapOnDom()
+    }
     $('.events, .meetup_container').removeClass('hidden');
     $('.description, .results_list, .weather_container, #direction_container').addClass('hidden');
     $('.description_tab, .weather_tab, .direction_tab, .trails_tab').removeClass('currentTab');
