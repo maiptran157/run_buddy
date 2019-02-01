@@ -11,11 +11,9 @@ let longi = null;
 
 function initializeApp() {
     addClickHandlersToElements();
-    //  Check window.location for query string
-    //  If query string contains trail
-    //  call displayTrailDescription(trail)
-    let query = window.location.search
+    let query = window.location.search;
     if (query.includes('lat')) {
+        getCurrentLocationForDirection();
         extractLatLongFromQuery(query)
     }
 }
