@@ -156,12 +156,8 @@ function displayDirectionLineOnMap(pointBCoordinates) {
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
-    var destionationPoint = pointB;
     if (!pointA) {
-        // getCurrentLocationForDirection();
-        // pointA = currentLocation;
-        // console.log(pointA);
-        return displayMapForNoAvailableDirection(destionationPoint)
+        pointA = currentLocation;
     }
     directionsService.route({
         origin: pointA,
