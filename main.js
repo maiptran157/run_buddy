@@ -6,16 +6,25 @@ let inputFromUser = null;
 let userInput = null;
 let markersOnMap = [];
 let map = {};
+let latt = null;
+let longi = null;
 
 function initializeApp() {
     addClickHandlersToElements();
+    //  Check window.location for query string
+    //  If query string contains trail
+    //  call displayTrailDescription(trail)
+    let query = window.location.search
+    if (query.includes('lat')) {
+        extractLatLongFromQuery(query)
+    }
 }
 
 function addClickHandlersToElements() {
     $('#runButton, #glass_button, .search_button').click(callGoogleAPI);
     /* Alert info box showing users what to input in the field */
     $('#search_input').focus(function () {
-        if(!$('#search_input').val()){
+        if (!$('#search_input').val()) {
             $('.invalid').addClass('hidden');
             $('#info_msg').removeClass('hidden');
         }
@@ -31,7 +40,7 @@ function addClickHandlersToElements() {
     });
     $("#search_field").on("keyup", event => {
         /*  if enter key is released */
-        if (event.keyCode === 13) { 
+        if (event.keyCode === 13) {
             event.preventDefault();
             $(".search_button").click(callGoogleAPI(event)); //runs the function attaches to click event off add button
         }
@@ -54,7 +63,7 @@ function callGoogleAPI() {
     /* if the search bar is empty, get current location */
     if (inputFromUser.length === 0) {
         getDataFromGeolocation();
-    /* if user typed in a location, make a Geocoding AJAX call */
+        /* if user typed in a location, make a Geocoding AJAX call */
     } else {
         getLatLongFromGeocoding(inputFromUser);
         getCurrentLocationForDirection();
@@ -75,21 +84,21 @@ function responseFromGeolocation(response) {
 
 function alertMsgAndRefresh() {
     $('.invalid').removeClass('hidden');
-    (function (){
+    (function () {
         var modal = document.getElementById('invalid-modal')
         var span = document.getElementsByClassName("close")[0];
         /* display modal */
         modal.style.display = "block";
         /* exit modal when click on x */
-        span.onclick = function() {
-              modal.style.display = "none";
+        span.onclick = function () {
+            modal.style.display = "none";
         }
         /* exit modal when click anywhere outside of modal */
-        window.onclick = function(event) {
-              if (event.target == modal) {
-                  modal.style.display = "none";
-              }
-        }  
+        window.onclick = function (event) {
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
     }())
 }
 
@@ -111,6 +120,7 @@ function geocodingResponse(response) {
 }
 
 function responseFromTrailsList(response) {
+
     if (response.trails.length === 0) {
         $(".results_list").empty();
         $(".map_page").removeClass("hidden");
@@ -119,12 +129,14 @@ function responseFromTrailsList(response) {
         $('.list_and_details').append(noResult);
         return;
     }
-    $(".detail_container").removeClass('hidden');
-    $('.nav_tabs').addClass('hidden');
+
     const { trails } = response;
+
     trails.map((trail) => {
+
         const { latitude, longitude } = trail;
         let coordinates = new google.maps.LatLng(latitude, longitude);
+
         /* only include results with an image since not all results have one */
         if (trail.imgSqSmall) {
             runningTrails.push({
@@ -135,7 +147,24 @@ function responseFromTrailsList(response) {
             });
         }
     });
-    displayResultAfterSearch();
+
+    let query = window.location.search;
+    if (query.includes('lat')) {
+        findTrailfromLatandLong(latt, longi);
+        $(".loading").addClass('hidden');
+        $(".map_page").removeClass('hidden');
+        $(".map_area").removeClass('hidden');
+        $('.nav_tabs').removeClass('hidden');
+        // return;
+    } else {
+        displayResultAfterSearch();
+        $('.nav_tabs').addClass('hidden');
+    }
+
+    $(".detail_container").removeClass('hidden');
+
+
+
 }
 
 function displayError(error) {
@@ -143,6 +172,7 @@ function displayError(error) {
 }
 
 function displayResultAfterSearch() {
+
     if ($('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').removeClass('zIndex')
     }
@@ -153,17 +183,21 @@ function displayResultAfterSearch() {
     $('.results_list').removeClass('hidden');
     $('.trails_tab').addClass('currentTab');
     $('#map_area').text();
-    if($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')){
+    if ($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')) {
         $('.weather_tab, .meetup_tab').removeClass('currentTab');
+
         displayMapOnDom();
         return;
     }
     $('.weather_tab, .meetup_tab').removeClass('currentTab');
+
     displayMapOnDom();
 }
 
 function displayResult() {
-    history.back()
+    var pathName = document.location.pathname;;
+    window.history.pushState({}, document.title, pathName);
+
     if ($('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').removeClass('zIndex')
     }
@@ -174,7 +208,7 @@ function displayResult() {
     $('.results_list').removeClass('hidden');
     $('.trails_tab').addClass('currentTab');
     $('#map_area').text();
-    if($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')){
+    if ($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')) {
         $('.weather_tab, .meetup_tab').removeClass('currentTab');
         displayMapOnDom();
         return;
@@ -205,7 +239,7 @@ function displayDirection() {
 }
 
 function displayWeather() {
-    if($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')){
+    if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
         displayMapOnDom()
     }
     $('#direction_container, .results_list, .events, .description, .meetup_container').addClass('hidden');
@@ -218,7 +252,7 @@ function displayWeather() {
 }
 
 function displayMeetUp() {
-    if($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')){
+    if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
         displayMapOnDom()
     }
     $('.events, .meetup_container').removeClass('hidden');
@@ -250,8 +284,26 @@ function resetNotifyTrailClicked(event) {
     }
 }
 
-function goBackToLandingPage(){
+function goBackToLandingPage() {
     $(".map_page, .map_area").addClass("hidden");
     $(".landing_page").removeClass("hidden");
     $('.meetup_container').empty();
+}
+
+function extractLatLongFromQuery(query) {
+    let latAndLong = query.split("?lat=")[1].split("?long=");
+    latAndLong = latAndLong.map(x => parseFloat(x));
+    latt = latAndLong[0];
+    longi = latAndLong[1];
+    getDataFromTrailsList(longi, latt)
+}
+
+function findTrailfromLatandLong(long, lat) {
+
+    for (i = 0; i < runningTrails.length; i++) {
+        if (runningTrails[i].latitude === lat && runningTrails[i].longitude === long) {
+
+            return displayTrailDescription(runningTrails[i]);
+        }
+    }
 }

@@ -4,7 +4,7 @@ function getDataFromGeolocation() {
         method: 'post',
         dataType: 'json',
         success: responseFromGeolocation,
-        error: ()=>displayError('GetDataFromGeoLoaction'),
+        error: () => displayError('GetDataFromGeoLoaction'),
     }
     $.ajax(location);
 }
@@ -17,7 +17,7 @@ function reverseGeolocation(response) {
         method: 'post',
         dataType: 'json',
         success: getCurrentLocation,
-        error: ()=>displayError('reverseGeolocation'),
+        error: () => displayError('reverseGeolocation'),
     }
     $.ajax(location);
 }
@@ -40,7 +40,7 @@ function getCurrentLocationForDirection() {
         method: 'post',
         dataType: 'json',
         success: responseFromGetCurrentLocationForDirection,
-        error: ()=>displayError('GetDataFromGeoLoaction'),
+        error: () => displayError('GetDataFromGeoLoaction'),
     }
     $.ajax(location);
 }
@@ -63,12 +63,13 @@ function getLatLongFromGeocoding(inputAddress) {
             address: formattedAddress
         },
         success: geocodingResponse,
-        error: ()=>displayError('GetDataFromGeocoding'),
+        error: () => displayError('GetDataFromGeocoding'),
     }
     $.ajax(location);
 }
 
 function activatePlacesSearch() {
+
     const input = document.getElementById('search_input');
     const input2 = document.getElementById('search_field');
     const autocomplete = new google.maps.places.Autocomplete(input);
@@ -76,6 +77,7 @@ function activatePlacesSearch() {
 }
 
 function getDataFromTrailsList(latitude, longitude) {
+
     $('.landing_page').addClass('hidden');
     if (userInput) {
         $("#search_field").val(userInput);
@@ -87,7 +89,7 @@ function getDataFromTrailsList(latitude, longitude) {
         method: 'GET',
         url: `https://www.trailrunproject.com/data/get-trails?lat=${latitude}&lon=${longitude}&maxResults=30&key=${TRAIL_API_KEY}`,
         success: responseFromTrailsList,
-        error: ()=>displayError('getDataFromTraiList'),
+        error: () => displayError('getDataFromTraiList'),
     }
     $.ajax(runningTrails);
 }
@@ -98,7 +100,7 @@ function getDataFromWeather(lat, lon) {
         method: 'post',
         dataType: 'json',
         success: displayWeatherSuccess,
-        error: ()=>displayError('getDataFromWeather'),
+        error: () => displayError('getDataFromWeather'),
     }
     $.ajax(weather);
 }
@@ -117,10 +119,10 @@ function getDataFromWeather(lat, lon) {
 function getDataFromMeetUp(lat, long, trailName) {
     const meetup = {
         url: `https://api.meetup.com/2/open_events?&sign=true&photo-host=public&lat=${lat}&lon=${long}&topic=running&page=20&key=${MEETUP_API_KEY}`,
-        success: (response)=>displayMeetUpSuccess(response, trailName),
+        success: (response) => displayMeetUpSuccess(response, trailName),
         method: 'post',
         dataType: 'jsonp',
-        error: ()=>displayError('getDataFromMeetUp'),
+        error: () => displayError('getDataFromMeetUp'),
     }
     $.ajax(meetup);
 }

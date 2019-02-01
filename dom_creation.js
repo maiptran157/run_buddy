@@ -1,8 +1,10 @@
 function displayMapOnDom() {
     $(".landing_page").addClass("hidden");
-
+    if (typeof runningTrails[0].coordinates === "object") {
+        runningTrails.unshift(runningTrails[0].coordinates)
+    }
     /* Map options */
-    if($(window).width()<=480){
+    if ($(window).width() <= 480) {
         var options = {
             zoom: 9,
             center: runningTrails[0],
@@ -17,6 +19,7 @@ function displayMapOnDom() {
     /* New map */
     map = new google.maps.Map(document.getElementById("map_area"), options);
     /* Add marker */
+
     for (var trailIndex = 1; trailIndex < runningTrails.length; trailIndex++) {
         let marker = new google.maps.Marker({
             position: runningTrails[trailIndex].coordinates,
@@ -96,7 +99,7 @@ function renderTrailInfoOnDom(markerIsClicked = false) {
 }
 
 function displayTrailDescription(trail) {
-    history.pushState({trail: trail.name}, "title", `?${trail.name}`);
+    history.pushState({ trail: trail.name }, "title", `?lat=${trail.longitude}?long=${trail.latitude}`);
     if (!$('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').addClass('zIndex')
     }
@@ -110,7 +113,7 @@ function displayTrailDescription(trail) {
     displayDescription();
     const trailLat = trail.latitude;
     const trailLong = trail.longitude;
-    getDataFromMeetUp(trailLat,trailLong,trail.name);
+    getDataFromMeetUp(trailLat, trailLong, trail.name);
     const imageOfPlace = $('<img>').attr('src', trail.imgMedium);
     const nameOfPlace = $('<p>').addClass('trailName').text(trail.name);
     const location = $('<div>').html(`<b>Location :</b> ${trail.location}`);
@@ -134,6 +137,7 @@ function displayTrailDescription(trail) {
 
 function displayDirectionLineOnMap(pointBCoordinates) {
     $("#map_area").text();
+
     var pointA = currentLocation,
         pointB = pointBCoordinates,
         myOptions = {
@@ -146,11 +150,19 @@ function displayDirectionLineOnMap(pointBCoordinates) {
         directionsDisplay = new google.maps.DirectionsRenderer({ //find me a direction
             map: map
         })
+
     /* get route from A to B */
     calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB);
 }
 
 function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
+    var destionationPoint = pointB;
+    if (!pointA) {
+        // getCurrentLocationForDirection();
+        // pointA = currentLocation;
+        // console.log(pointA);
+        return displayMapForNoAvailableDirection(destionationPoint)
+    }
     directionsService.route({
         origin: pointA,
         destination: pointB,
@@ -159,7 +171,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
     },
         function (response, status) {
             /* success function */
-            if (status == "OK") { 
+            if (status == "OK") {
                 directionsDisplay.setDirections(response);
                 var result = document.getElementById('direction_container');
                 result.innerHTML = "";
@@ -184,7 +196,7 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
                     newTr3.appendChild(td3);
                     result.appendChild(newTr3);
                 }
-            /* Direction error function */
+                /* Direction error function */
             } else {
                 displayMapForNoAvailableDirection(pointB);
                 console.log('Directions request failed due to ' + status + ' for direction');
@@ -193,9 +205,10 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
             }
         }
     );
+
 }
 
-function displayMapForNoAvailableDirection(pointB){
+function displayMapForNoAvailableDirection(pointB) {
     const options = {
         zoom: 10,
         center: pointB,
@@ -350,7 +363,7 @@ function displayMeetUpSuccess(response, trailName) {
     if ($('.meetup_result_message').length) {
         $('.meetup_result_message').remove()
     }
-        message = $('<div>').addClass('meetup_result_message').text(`Events near ${trailName}:`)
+    message = $('<div>').addClass('meetup_result_message').text(`Events near ${trailName}:`)
     const message_container = $('<div>').addClass('message_container');
     message_container.append(message)
     $('.meetup_container').append(message_container);
