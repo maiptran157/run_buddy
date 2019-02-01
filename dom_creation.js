@@ -1,6 +1,8 @@
 function displayMapOnDom() {
     $(".landing_page").addClass("hidden");
-
+    if (typeof runningTrails[0].coordinates === "object") {
+        runningTrails.unshift(runningTrails[0].coordinates)
+    }
     /* Map options */
     if ($(window).width() <= 480) {
         var options = {
@@ -13,11 +15,11 @@ function displayMapOnDom() {
             center: runningTrails[0],
         }
     }
-    debugger;
+
     /* New map */
     map = new google.maps.Map(document.getElementById("map_area"), options);
     /* Add marker */
-    debugger;
+
     for (var trailIndex = 1; trailIndex < runningTrails.length; trailIndex++) {
         let marker = new google.maps.Marker({
             position: runningTrails[trailIndex].coordinates,
@@ -97,7 +99,7 @@ function renderTrailInfoOnDom(markerIsClicked = false) {
 }
 
 function displayTrailDescription(trail) {
-    debugger;
+
     history.pushState({ trail: trail.name }, "title", `?lat=${trail.longitude}?long=${trail.latitude}`);
     if (!$('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').addClass('zIndex')
@@ -157,7 +159,9 @@ function displayDirectionLineOnMap(pointBCoordinates) {
 function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, pointB) {
     var destionationPoint = pointB;
     if (!pointA) {
-        debugger;
+        // getCurrentLocationForDirection();
+        // pointA = currentLocation;
+        // console.log(pointA);
         return displayMapForNoAvailableDirection(destionationPoint)
     }
     directionsService.route({

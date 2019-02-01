@@ -172,6 +172,7 @@ function displayError(error) {
 }
 
 function displayResultAfterSearch() {
+
     if ($('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').removeClass('zIndex')
     }
@@ -184,12 +185,12 @@ function displayResultAfterSearch() {
     $('#map_area').text();
     if ($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')) {
         $('.weather_tab, .meetup_tab').removeClass('currentTab');
-        debugger;
+
         displayMapOnDom();
         return;
     }
     $('.weather_tab, .meetup_tab').removeClass('currentTab');
-    debugger;
+
     displayMapOnDom();
 }
 
