@@ -1,18 +1,18 @@
 function displayMapOnDom() {
     $(".landing_page").addClass("hidden");
     if (typeof runningTrails[0].coordinates === "object") {
-        runningTrails.unshift(runningTrails[0].coordinates)
+        runningTrails.unshift(currentLocation);
     }
     /* Map options */
     if ($(window).width() <= 480) {
         var options = {
             zoom: 9,
-            center: runningTrails[0],
+            center: currentLocation,
         }
     } else {
         var options = {
             zoom: 10,
-            center: runningTrails[0],
+            center: currentLocation,
         }
     }
 
