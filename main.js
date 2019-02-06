@@ -76,8 +76,7 @@ function responseFromGeolocation(response) {
     let center = new google.maps.LatLng(lat, lng);
     runningTrails.push(center);
     getresponseFromTrailsList(lat, lng);
-    getDataFromWeather(lat, lng);
-    getWeatherForecast(lat, lng);
+    // getDataFromWeather(lat, lng);
 }
 
 function alertMsgAndRefresh() {
@@ -113,8 +112,7 @@ function geocodingResponse(response) {
     let center = new google.maps.LatLng(lat, lng);
     runningTrails.push(center);
     getDataFromTrailsList(lat, lng);
-    getDataFromWeather(lat, lng);
-    // getWeatherForecast(lat, lng);
+    // getDataFromWeather(lat, lng);
 }
 
 function responseFromTrailsList(response) {
@@ -293,7 +291,7 @@ function extractLatLongFromQuery(query) {
     latAndLong = latAndLong.map(x => parseFloat(x));
     latt = latAndLong[0];
     longi = latAndLong[1];
-    getDataFromTrailsList(longi, latt)
+    getDataFromTrailsList(longi, latt);
 }
 
 function findTrailfromLatandLong(long, lat) {

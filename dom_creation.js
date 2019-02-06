@@ -6,12 +6,12 @@ function displayMapOnDom() {
     /* Map options */
     if ($(window).width() <= 480) {
         var options = {
-            zoom: 9,
+            zoom: 8,
             center: currentLocation,
         }
     } else {
         var options = {
-            zoom: 10,
+            zoom: 9,
             center: currentLocation,
         }
     }
@@ -111,6 +111,7 @@ function displayTrailDescription(trail) {
     }
     $('.results_list').addClass('hidden');
     displayDescription();
+    getDataFromWeather(parseFloat(trail.latitude), parseFloat(trail.longitude));
     const trailLat = trail.latitude;
     const trailLong = trail.longitude;
     getDataFromMeetUp(trailLat, trailLong, trail.name);
