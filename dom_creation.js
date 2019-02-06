@@ -111,6 +111,7 @@ function displayTrailDescription(trail) {
     }
     $('.results_list').addClass('hidden');
     displayDescription();
+    getDataFromWeather(parseFloat(trail.latitude), parseFloat(trail.longitude));
     const trailLat = trail.latitude;
     const trailLong = trail.longitude;
     getDataFromMeetUp(trailLat, trailLong, trail.name);
@@ -221,6 +222,7 @@ function displayMapForNoAvailableDirection(pointB) {
 }
 
 function displayWeatherSuccess(responseFromServer) {
+    console.log(responseFromServer);
     let weather = {
         condition: responseFromServer.weather[0]['main'],
         cityName: responseFromServer.name,

@@ -30,8 +30,8 @@ function responseFromGeolocation(response) {
     currentLocation = new google.maps.LatLng(lat, lng);
     runningTrails.push(center);
     getDataFromTrailsList(lat, lng);
-    getDataFromWeather(lat, lng);
-    // getWeatherForecast(lat, lng);
+
+    // getDataFromWeather(lat, lng);
 }
 
 function getCurrentLocationForDirection() {
@@ -48,6 +48,7 @@ function getCurrentLocationForDirection() {
 function responseFromGetCurrentLocationForDirection(response) {
     let lat = response.location.lat;
     let lng = response.location.lng;
+    // getDataFromWeather(lat, lng);
     currentLocation = new google.maps.LatLng(lat, lng);
 }
 
@@ -104,17 +105,6 @@ function getDataFromWeather(lat, lon) {
     }
     $.ajax(weather);
 }
-
-// function getWeatherForecast(lat, lon) {
-//     const forecast = {
-//         url: `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${lon}&APPID=${WEATHER_API_KEY}`,
-//         method: 'post',
-//         dataType: 'json',
-//         success: displayForecastSuccess,
-//         error: ()=>displayError('getWeatherForecast'),
-//     }
-//     $.ajax(forecast);
-// }
 
 function getDataFromMeetUp(lat, long, trailName) {
     const meetup = {
