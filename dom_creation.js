@@ -6,12 +6,12 @@ function displayMapOnDom() {
     /* Map options */
     if ($(window).width() <= 480) {
         var options = {
-            zoom: 9,
+            zoom: 8,
             center: currentLocation,
         }
     } else {
         var options = {
-            zoom: 10,
+            zoom: 9,
             center: currentLocation,
         }
     }
@@ -222,7 +222,6 @@ function displayMapForNoAvailableDirection(pointB) {
 }
 
 function displayWeatherSuccess(responseFromServer) {
-    console.log(responseFromServer);
     let weather = {
         condition: responseFromServer.weather[0]['main'],
         cityName: responseFromServer.name,
