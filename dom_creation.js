@@ -7,12 +7,12 @@ function displayMapOnDom() {
     if ($(window).width() <= 480) {
         var options = {
             zoom: 8,
-            center: currentLocation,
+            center: runningTrails[1].coordinates,
         }
     } else {
         var options = {
             zoom: 9,
-            center: currentLocation,
+            center: runningTrails[1].coordinates,
         }
     }
 
@@ -196,7 +196,6 @@ function calculateAndDisplayRoute(directionsService, directionsDisplay, pointA, 
                 /* Direction error function */
             } else {
                 displayMapForNoAvailableDirection(pointB);
-                console.log('Directions request failed due to ' + status + ' for direction');
                 var result = document.getElementById('direction_container');
                 result.innerText = "Oops. There is no direct route to this trail from your location. Please try another trail.";
             }

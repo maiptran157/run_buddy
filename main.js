@@ -46,7 +46,7 @@ function addClickHandlersToElements() {
     $('.results_list').on('click', '.list_result', notifyTrailClicked);
     $('.results_list').on('mouseleave', '.list_result', resetNotifyTrailClicked);
     /* displaying tabs */
-    $('.trails_tab').click(displayResult);
+    $('.trails_tab').click(displayResultAfterSearch);
     $('.description_tab').click(displayDescription);
     $('.direction_tab').click(displayDirection);
     $('.weather_tab').click(displayWeather);
@@ -54,6 +54,7 @@ function addClickHandlersToElements() {
 }
 
 function callGoogleAPI() {
+    removePathName();
     $('.no-result').remove();
     inputFromUser = $("#search_input").val() || $("#search_field").val();
     userInput = $("#search_input").val();
@@ -92,6 +93,8 @@ function alertMsgAndRefresh() {
         }
         /* exit modal when click anywhere outside of modal */
         window.onclick = function (event) {
+            $("#search_input").val("");
+            $("#search_field").val("");
             if (event.target == modal) {
                 modal.style.display = "none";
             }
@@ -103,6 +106,7 @@ function alertMsgAndRefresh() {
 function geocodingResponse(response) {
     if (response.status === "ZERO_RESULTS") {
         alertMsgAndRefresh();
+        return;
     }
     runningTrails = [];
     markersOnMap = [];
@@ -116,7 +120,6 @@ function geocodingResponse(response) {
 }
 
 function responseFromTrailsList(response) {
-
     if (response.trails.length === 0) {
         $(".results_list").empty();
         $(".map_page").removeClass("hidden");
@@ -125,14 +128,10 @@ function responseFromTrailsList(response) {
         $('.list_and_details').append(noResult);
         return;
     }
-
     const { trails } = response;
-
     trails.map((trail) => {
-
         const { latitude, longitude } = trail;
         let coordinates = new google.maps.LatLng(latitude, longitude);
-
         /* only include results with an image since not all results have one */
         if (trail.imgSqSmall) {
             runningTrails.push({
@@ -143,7 +142,6 @@ function responseFromTrailsList(response) {
             });
         }
     });
-
     let query = window.location.search;
     if (query.includes('lat')) {
         findTrailfromLatandLong(latt, longi);
@@ -156,11 +154,7 @@ function responseFromTrailsList(response) {
         displayResultAfterSearch();
         $('.nav_tabs').addClass('hidden');
     }
-
     $(".detail_container").removeClass('hidden');
-
-
-
 }
 
 function displayError(error) {
@@ -168,7 +162,8 @@ function displayError(error) {
 }
 
 function displayResultAfterSearch() {
-
+    removePathName();
+    displayMapOnDom();
     if ($('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').removeClass('zIndex')
     }
@@ -181,19 +176,14 @@ function displayResultAfterSearch() {
     $('#map_area').text();
     if ($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')) {
         $('.weather_tab, .meetup_tab').removeClass('currentTab');
-
-        displayMapOnDom();
         return;
     }
     $('.weather_tab, .meetup_tab').removeClass('currentTab');
-
-    displayMapOnDom();
 }
 
 function displayResult() {
-    var pathName = document.location.pathname;;
-    window.history.pushState({}, document.title, pathName);
-
+    removePathName();
+    displayMapOnDom();
     if ($('.container_tabs').hasClass('zIndex')) {
         $('.container_tabs').removeClass('zIndex')
     }
@@ -206,11 +196,9 @@ function displayResult() {
     $('#map_area').text();
     if ($('.weather_tab').hasClass('currentTab') || $('.meetup_tab').hasClass('currentTab')) {
         $('.weather_tab, .meetup_tab').removeClass('currentTab');
-        displayMapOnDom();
         return;
     }
     $('.weather_tab, .meetup_tab').removeClass('currentTab');
-    displayMapOnDom();
 }
 
 function displayDescription() {
@@ -235,9 +223,9 @@ function displayDirection() {
 }
 
 function displayWeather() {
-    if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
-        displayMapOnDom()
-    }
+    // if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
+    //     displayMapOnDom()
+    // }
     $('#direction_container, .results_list, .events, .description, .meetup_container').addClass('hidden');
     $('.weather_container').removeClass('hidden');
     $('.description_tab, .meetup_tab, .direction_tab, .trails_tab').removeClass('currentTab');
@@ -248,9 +236,9 @@ function displayWeather() {
 }
 
 function displayMeetUp() {
-    if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
-        displayMapOnDom()
-    }
+    // if ($('.description_tab').hasClass('currentTab') || $('#direction_container').hasClass('currentTab')) {
+    //     displayMapOnDom()
+    // }
     $('.events, .meetup_container').removeClass('hidden');
     $('.description, .results_list, .weather_container, #direction_container').addClass('hidden');
     $('.description_tab, .weather_tab, .direction_tab, .trails_tab').removeClass('currentTab');
@@ -284,6 +272,14 @@ function goBackToLandingPage() {
     $(".map_page, .map_area").addClass("hidden");
     $(".landing_page").removeClass("hidden");
     $('.meetup_container').empty();
+    runningTrails = [];
+    currentLocation = null;
+    inputFromUser = null;
+    userInput = null;
+    markersOnMap = [];
+    map = {};
+    latt = null;
+    longi = null;
 }
 
 function extractLatLongFromQuery(query) {
@@ -295,11 +291,14 @@ function extractLatLongFromQuery(query) {
 }
 
 function findTrailfromLatandLong(long, lat) {
-
     for (i = 0; i < runningTrails.length; i++) {
         if (runningTrails[i].latitude === lat && runningTrails[i].longitude === long) {
-
             return displayTrailDescription(runningTrails[i]);
         }
     }
+}
+
+function removePathName() {
+    var pathName = document.location.pathname;;
+    window.history.pushState({}, document.title, pathName);
 }
