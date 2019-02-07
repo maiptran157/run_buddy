@@ -3,70 +3,92 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="description" content="c718 hackathon 2, team 1">
+    <meta name="description" content="Find Running Trails">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="author" content="Esther, Perry, Sarah, Torie, Mia">
-    <title>7.18 Hackathon 2 (Team 1)</title>
-    <link href="https://fonts.googleapis.com/css?family=Poppins" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:800i" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Montserrat|Open+Sans|Roboto:300" rel="stylesheet">
-    <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <title>Run Buddy</title>
+    <link rel="shortcut icon" type="image/png" href="images/RunBuddyBlueDot.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Open+Sans|Raleway:800i|Quicksand|Poppins|Montserrat:400i|Noto+Sans:400i"
+        rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="style.css">
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD6lZ-Mm6dYYqLMRQQN4vnODlQ5kRUdnJo&libraries=places&callback=activatePlacesSearch"
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDKqdQXJuUA7X296IGSb3enjdybpgnwfMw&libraries=places&callback=activatePlacesSearch"
         async defer></script>
     <script type="text/javascript" src="main.js"></script>
+    <script type="text/javascript" src="config/api.js"></script>
+    <script type="text/javascript" src="ajax_calls.js"></script>
+    <script type="text/javascript" src="dom_creation.js"></script>
 </head>
 
 <body>
-    <div class="meerkat hidden">
-            <img id="meerkat" src="./images/meerkat.gif">
+    <div class="loading hidden">
+        <div class="loadingImg">
+            <img id="runningMan" src="./images/running_man.gif" alt="running man">
+            <img id="runningWoman" src="./images/running_woman.gif" alt="running woman">
+        </div>
     </div>
-    <div class="container-fluid">
 
-        <div class="landing_page">
+    <div class="landing_page">
+        <div class="logo-info">
+            <img class="logo" src="./images/RunBuddyLogo.png" alt="logo">
+            <h2 class="purpose">Find Running Trails Near You</h2>
+        </div>
+        <div class="search_container">
+            <input type="text" class="form-control" id="search_input" placeholder="Current Location">
+            <button id="runButton">LET'S RUN</button>
+            <img id="glass_button" src="./images/glass.png" alt="glass_icon">
+        </div>
+        <div class="info">
+            <div class="information hidden" id="info_msg">
+                Enter a location to search for trails in North America<br>OR<br>Just click the button to use current
+                location
+            </div>
+        </div>
+    </div>
 
-            <!-- <div class="search_container"> -->
-
-                <div class="logo">
-                    <img class="responsive" src="./images/RunBuddyLogo.png">
-                </div>
-                <div class="form-inline">
-                    <input type="text" class="form-control" id="search_input" placeholder="Enter ZIP Codes or City">
-                    <div class="input-group-btn form-group">
-                        <button class="btn btn-default" id="runButton">
-                            <!-- <img id="runningMan" src="images/letsrun.png"> -->
-                            LET'S RUN
-                        </button>
-
+    <div class="map_page hidden">
+        <div class="search_and_logo">
+            <img class="map_page_logo" src="./images/RunBuddyLogo.png">
+            <div class="search_bar">
+                <input type="text" id="search_field" placeholder="Current Location">
+                <img class="search_button" src="./images/search.png" alt="search_button">
+            </div>
+        </div>
+        <div class="map_and_trail_list">
+            <div id="map_area" class="map_area hidden"></div>
+            <div class="list_and_details">
+                <div class="results_list"></div>
+                <div class="detail_container">
+                    <div class="nav_tabs hidden">
+                        <div class="trails_tab tabLinks">
+                            < Back</div> <div class="description_tab tabLinks">Trail Info
+                        </div>
+                        <div class="direction_tab tabLinks">Direction</div>
+                        <div class="weather_tab tabLinks">Weather</div>
+                        <div class="meetup_tab tabLinks">Events</div>
                     </div>
-                    <div class="alert information hidden" id="info_msg">
-                        <span class="glyphicon glyphicon-info-sign"></span>
-                        Enter a location to look for a place to run<br>or<br>just click the green button to look in your current location 
+                    <div class="container_tabs">
+                        <div class="single_location_detail">
+                            <div class="description_container"></div>
+                            <div id="direction_container" class="hidden"></div>
+                            <div class="weather_container"></div>
+                            <div class="meetup_container"></div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
 
-        <div class="map_page hidden">
-            <div id="map_area">
-            </div>
-            <div class="group_tabs">
-                <div class="location_list">
-                    <div class="single_location_detail hidden">
-                        <h1></h1>
-                        <div class="nav_taps">
-                            <div class="results description_tab tabLinks hidden" onclick="displayResult()">
-                                Trail List</div>
-                            <div class="description_tab tabLinks" onclick="displayDescription()">Description</div>
-                            <div class="direction_tab tabLinks" onclick="displayDirection()">Direction</div>
-                            <div class="weather_tab tabLinks" onclick="displayWeather()">Weather</div>
-                            <div class="meetup_tab tabLinks" onclick="displayMeetUp()">MeetUp</div>
-                        </div>
-                        <div class="descriptionTab">
-                        </div>
-                        <div id="result" class="direction hidden" onclick="displayDirection()"></div>
-                    </div>
-                </div>
+    <div id="invalid-modal" class="modal">
+        <div class="modal-content invalid-modal">
+            <span class="close">&times;</span>
+            <div class="modal-container">
+                <img src="./images/220631-P1ICX3-226.jpg" alt="map" class="invalid-icon">
+                <div class="invalid-msg">Please enter a valid location to find trails</div>
+                <a class="attribution" href="https://www.freepik.com/free-vector/flat-map-compass-background_1581304.htm">Map
+                    Image Designed by Freepik</a>
             </div>
         </div>
     </div>
